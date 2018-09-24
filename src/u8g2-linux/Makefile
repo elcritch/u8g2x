@@ -9,7 +9,7 @@
 # NanoPi NEO Plus 2:  arm-none-linux-gnueabihf-gcc
 # CC=arm-none-linux-gnueabihf-gcc
 
-IDIR= -I ./include
+IDIR= -I./include
 SRCDIR = u8g2src
 OBJDIR = obj
 OUTDIR = bin
@@ -30,9 +30,9 @@ i2c-oled: $(U8G2_OBJS) i2c.o
 	@echo Generating $(TARGET) ...
 	@$(CC) -o $(OUTDIR)/$@ $(OBJ) $(LDIR) $(LIBS)
 
-$(OUTDIR)/libu8g2.a: $(U8G2_OBJS) $(UL_OBJS)
+$(OUTDIR)/libu8g2.a: $(U8G2_OBJS) $(UL_OBJS) cperiphery
 	@echo Generating $@ ...
-	ar rcs $@ $^
+	ar rcs $(U8G2_OBJS) $(UL_OBJS) $^
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c
 	$(CC) -c -o $@ $< $(CFLAGS) $(LDIR) $(LIBS)
@@ -55,3 +55,5 @@ directories:
 	@mkdir -p $(OBJDIR)
 	@mkdir -p $(OUTDIR)
 
+cperiphery:
+	$(MAKE) -C c-periphery/
