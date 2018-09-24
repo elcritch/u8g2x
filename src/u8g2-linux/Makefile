@@ -18,16 +18,19 @@ LIBS= -lm
 
 CFLAGS= $(IDIR)
 
-SOURCES=$(wildcard $(SRCDIR)/*.c)
-OBJECTS=$(patsubst $(SRCDIR)/%,$(OBJDIR)/%,$(SOURCES:.c=.o))
+U8G2_SRCS=$(wildcard $(SRCDIR)/*.c)
+U8G2_OBJS=$(patsubst $(SRCDIR)/%,$(OBJDIR)/%,$(U8G2_SRCS:.c=.o))
+
+UL_SRCS= u8g2_linux_impl.c u8g2_linux_spi.c
+UL_OBJS=$(patsubst $(SRCDIR)/%,$(OBJDIR)/%,$(UL_SRCS:.c=.o))
 
 all: directories $(OUTDIR)/libu8g2.a
 
-i2c-oled: $(OBJECTS) i2c.o
+i2c-oled: $(U8G2_OBJS) i2c.o
 	@echo Generating $(TARGET) ...
 	@$(CC) -o $(OUTDIR)/$@ $(OBJ) $(LDIR) $(LIBS)
 
-$(OUTDIR)/libu8g2.a: $(OBJECTS)
+$(OUTDIR)/libu8g2.a: $(U8G2_OBJS) $(UL_OBJS)
 	@echo Generating $@ ...
 	ar rcs $@ $^
 
