@@ -1,6 +1,0 @@
-[submodule "src/u8g2"]
-	path = src/u8g2
-	url = https://github.com/olikraus/u8g2.git
-[submodule "src/u8g2-arm-linux"]
-	path = src/u8g2-arm-linux
-	url = https://github.com/elcritch/u8g2-arm-linux.git
