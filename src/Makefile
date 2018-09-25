@@ -1,10 +1,10 @@
-IDIR = -I./u8g2-linux/include -I./forthwith/src
-LDIR = -L./u8g2-linux/bin/
-LIBS = -lm -llibu8g2
+IDIR = -I./u8g2-linux/include -I./forthwith/src -I./forthwith/_build
+LDIR = -L./u8g2-linux/bin/ -L./forthwith/_build/
+LIBS = -lm -llibu8g2 -lforthwith
 
 CFLAGS = $(IDIR)
 
-SRCS
+SRCS = u8g2x-main.c 
 
 all: sub-u8g2-linux-lib sub-forthwith u8g2x-main
 

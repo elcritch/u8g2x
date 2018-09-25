@@ -2,6 +2,7 @@
 
 #define FW_CUSTOM_TOB_FLUSH
 
+#include "forthwith-consts.h"
 #include "forthwith.h"
 #include "dict.h"
 #include "prompt.h"

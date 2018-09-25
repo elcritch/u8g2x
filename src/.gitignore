@@ -6,3 +6,4 @@ tests/*
 !tests/*.c
 !tests/*.h
 *.o
+u8g2x-main
