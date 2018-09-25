@@ -32,7 +32,7 @@ i2c-oled: $(U8G2_OBJS) i2c.o
 
 $(OUTDIR)/libu8g2.a: $(U8G2_OBJS) $(UL_OBJS) cperiphery
 	@echo Generating $@ ...
-	ar rcs $(U8G2_OBJS) $(UL_OBJS) $^
+	ar rcs $@ $(U8G2_OBJS) $(UL_OBJS)
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c
 	$(CC) -c -o $@ $< $(CFLAGS) $(LDIR) $(LIBS)

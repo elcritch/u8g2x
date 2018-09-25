@@ -8,6 +8,11 @@
 #include <unistd.h>
 #include <time.h>
 
+#include <periphery/spi.h>
+#include <periphery/i2c.h>
+
+#include <u8g2.h>
+
 // Time
 void sleep_ms(unsigned long milliseconds);
 void sleep_us(unsigned long microseconds);
@@ -18,6 +23,7 @@ struct gpio_devs {
   gpio_t cs;
   gpio_t dc;
   gpio_t reset;
+  gpio_t d0;
   spi_t spi;
   i2c_t i2c;
 };

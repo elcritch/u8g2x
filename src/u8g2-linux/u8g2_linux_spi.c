@@ -13,7 +13,8 @@ uint8_t u8x8_byte_arduino_hw_spi3(u8x8_t *u8x8,
       u8x8_gpio_SetCS(u8x8, u8x8->display_info->chip_disable_level);
       /* Open spidev1.0 with mode 0 and max speed 1MHz */
       uint8_t spi_mode = u8x8->display_info->spi_mode;
-      if (spi_open(&pins->devs.spi, device_name, spi_mode, sck_clock_hz) < 0) {
+      uint8_t spi_clock_hz = u8x8->display_info->sck_clock_hz;
+      if (spi_open(&pins->devs.spi, pins->device_name, spi_mode, spi_clock_hz) < 0) {
         fprintf(stderr, "spi_open(): %s\n", spi_errmsg(&pins->devs.spi));
         return 0;
       }
