@@ -24,13 +24,23 @@ U8G2_OBJS=$(patsubst $(SRCDIR)/%,$(OBJDIR)/%,$(U8G2_SRCS:.c=.o))
 UL_SRCS= u8g2_linux_impl.c u8g2_linux_spi.c
 UL_OBJS=$(patsubst $(SRCDIR)/%,$(OBJDIR)/%,$(UL_SRCS:.c=.o))
 
+ARCH := $(shell uname -m)
+IS_ARM :=$(filter arm,$(shell uname -m))
+
+ifeq ($(ARCH), x86_64)
+FW_TARGET=linux-x86
+endif
+ifneq ($(IS_ARM),)
+FW_TARGET=linux-arm
+endif
+
 all: directories $(OUTDIR)/libu8g2.a
 
 i2c-oled: $(U8G2_OBJS) i2c.o
 	@echo Generating $(TARGET) ...
 	@$(CC) -o $(OUTDIR)/$@ $(OBJ) $(LDIR) $(LIBS)
 
-$(OUTDIR)/libu8g2.a: $(U8G2_OBJS) $(UL_OBJS) cperiphery
+$(OUTDIR)/libu8g2.a: $(U8G2_OBJS) $(UL_OBJS) cperiphery subforthwith
 	@echo Generating $@ ...
 	ar rcs $@ $(U8G2_OBJS) $(UL_OBJS)
 
@@ -57,3 +67,9 @@ directories:
 
 cperiphery:
 	$(MAKE) -C c-periphery/
+
+subforthwith:
+	@echo Compiling ForthWith for target $(FW_TARGET)
+	$(MAKE) -C forthwith/ clean
+	$(MAKE) -C forthwith/ default
+
