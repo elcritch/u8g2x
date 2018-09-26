@@ -1,23 +1,34 @@
 #include <periphery/gpio.h>
 #include "u8g2_linux_impl.h"
 
-uint8_t u8x8_byte_arduino_hw_spi3(u8x8_t *u8x8,
-                                  uint8_t msg,
-                                  uint8_t arg_int,
-                                  void *arg_ptr)
+uint8_t u8x8_byte_linux_hw_spi(u8x8_t *u8x8,
+                               uint8_t msg,
+                               uint8_t arg_int,
+                               void *arg_ptr)
 {
   gpio_pins_t *pins = u8x8_GetUserPtr(u8x8);
+  uint8_t spi_mode = u8x8->display_info->spi_mode;
+  uint8_t spi_clock_hz = u8x8->display_info->sck_clock_hz;
 
   switch(msg) {
     case U8X8_MSG_BYTE_INIT:
       u8x8_gpio_SetCS(u8x8, u8x8->display_info->chip_disable_level);
+
       /* Open spidev1.0 with mode 0 and max speed 1MHz */
-      uint8_t spi_mode = u8x8->display_info->spi_mode;
-      uint8_t spi_clock_hz = u8x8->display_info->sck_clock_hz;
       if (spi_open(&pins->devs.spi, pins->device_name, spi_mode, spi_clock_hz) < 0) {
         fprintf(stderr, "spi_open(): %s\n", spi_errmsg(&pins->devs.spi));
         return 0;
       }
+
+      if (spi_set_mode(&pins->devs.spi, u8x8->display_info->spi_mode) < 0) {
+        fprintf(stderr, "spi_set_mode(): %s\n", spi_errmsg(&pins->devs.spi));
+        return 0;
+      }
+      if (spi_set_bit_order(&pins->devs.spi, MSB_FIRST) < 0) {
+        fprintf(stderr, "spi_set_bit_order(): %s\n", spi_errmsg(&pins->devs.spi));
+        return 0;
+      }
+
       break;
 
     case U8X8_MSG_BYTE_SET_DC:
@@ -27,10 +38,13 @@ uint8_t u8x8_byte_arduino_hw_spi3(u8x8_t *u8x8,
     case U8X8_MSG_BYTE_START_TRANSFER:
       /* SPI mode has to be mapped to the mode of the current controller, */
       u8x8_gpio_SetCS(u8x8, u8x8->display_info->chip_enable_level);
+
+      u8x8_gpio_SetCS(u8x8, u8x8->display_info->chip_enable_level);
       u8x8->gpio_and_delay_cb(u8x8,
                               U8X8_MSG_DELAY_NANO,
                               u8x8->display_info->post_chip_enable_wait_ns,
                               NULL);
+
       break;
 
     case U8X8_MSG_BYTE_SEND:
@@ -54,7 +68,6 @@ uint8_t u8x8_byte_arduino_hw_spi3(u8x8_t *u8x8,
   }
 
   return 1;
+
 }
-
-
 

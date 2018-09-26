@@ -36,10 +36,6 @@ endif
 
 all: directories $(OUTDIR)/libu8g2.a
 
-i2c-oled: $(U8G2_OBJS) i2c.o
-	@echo Generating $(TARGET) ...
-	@$(CC) -o $(OUTDIR)/$@ $(OBJ) $(LDIR) $(LIBS)
-
 $(OUTDIR)/libu8g2.a: $(U8G2_OBJS) $(UL_OBJS) cperiphery subforthwith
 	@echo Generating $@ ...
 	ar rcs $@ $(U8G2_OBJS) $(UL_OBJS)

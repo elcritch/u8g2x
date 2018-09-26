@@ -55,20 +55,34 @@ uint8_t u8x8_linux_gpio_and_delay(u8x8_t *u8x8,
 
       /* Open GPIO CS with input direction */
       if (pins->cs >= 0 && gpio_open(&pins->devs.cs, pins->cs, GPIO_DIR_OUT) < 0) {
-        fprintf(stderr, "gpio_open(): %s\n", gpio_errmsg(&pins->devs.cs));
+        fprintf(stderr, "error: gpio_open(): %s\n", gpio_errmsg(&pins->devs.cs));
         return 0;
+      } else {
+        fprintf(stderr, "gpio_open(): %s\n", "CS");
       }
 
       /* Open GPIO DC with input direction */
       if (pins->dc >= 0 && gpio_open(&pins->devs.dc, pins->dc, GPIO_DIR_OUT) < 0) {
-        fprintf(stderr, "gpio_open(): %s\n", gpio_errmsg(&pins->devs.dc));
+        fprintf(stderr, "error: gpio_open(): %s\n", gpio_errmsg(&pins->devs.dc));
         return 0;
+      } else {
+        fprintf(stderr, "gpio_open(): %s\n", "DC");
       }
 
       /* Open GPIO RESET with input direction */
       if (pins->reset >= 0 && gpio_open(&pins->devs.reset, pins->cs, GPIO_DIR_OUT) < 0) {
-        fprintf(stderr, "gpio_open(): %s\n", gpio_errmsg(&pins->devs.reset));
+        fprintf(stderr, "error: gpio_open(): %s\n", gpio_errmsg(&pins->devs.reset));
         return 0;
+      } else {
+        fprintf(stderr, "gpio_open(): %s\n", "RESET");
+      }
+
+      /* Open GPIO D0 with input direction */
+      if (pins->d0 >= 0 && gpio_open(&pins->devs.d0, pins->cs, GPIO_DIR_OUT) < 0) {
+        fprintf(stderr, "error: gpio_open(): %s\n", gpio_errmsg(&pins->devs.d0));
+        return 0;
+      } else {
+        fprintf(stderr, "gpio_open(): %s\n", "D0");
       }
 
       break;							// can be used to setup pins
@@ -82,7 +96,7 @@ uint8_t u8x8_linux_gpio_and_delay(u8x8_t *u8x8,
         return 0;
 
     case U8X8_MSG_GPIO_DC:				// DC (data/cmd, A0, register select) pin: Output level in arg_int
-      if (gpio_write(&pins->devs.d0, arg_int) >= 0)
+      if (gpio_write(&pins->devs.dc, arg_int) >= 0)
         return 0;
 
     case U8X8_MSG_GPIO_RESET:			// Reset pin: Output level in arg_int

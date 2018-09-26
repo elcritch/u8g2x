@@ -1,10 +1,10 @@
 #include "u8g2_linux_i2c.h"
 
 
-uint8_t u8x8_byte_arm_linux_hw_i2c(u8x8_t *u8x8,
-                                   uint8_t msg,
-                                   uint8_t arg_int,
-                                   void *arg_ptr)
+uint8_t u8x8_byte_linux_hw_i2c(u8x8_t *u8x8,
+                               uint8_t msg,
+                               uint8_t arg_int,
+                               void *arg_ptr)
 {
   gpio_pins_t *pins = u8x8_GetUserPtr(u8x8);
 

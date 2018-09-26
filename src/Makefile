@@ -4,12 +4,13 @@ LIBS = -lm -llibu8g2 -lforthwith
 
 CFLAGS = $(IDIR)
 
-SRCS = u8g2x-main.c 
+all: sub-u8g2-linux-lib sub-forthwith u8g2x-main u8g2x-test
 
-all: sub-u8g2-linux-lib sub-forthwith u8g2x-main
+u8g2x-main: u8g2x-main.c 
+	$(CC) -c -o $@ $^ $(CFLAGS) $(LDIR) $(LIBS)
 
-u8g2x-main:
-	$(CC) -c -o $@ $(SRCS) $(CFLAGS) $(LDIR) $(LIBS)
+u8g2x-test: test-example.c
+	$(CC) -c -o $@ $^ $(CFLAGS) $(LDIR) $(LIBS)
 
 sub-u8g2-linux-lib:
 	$(MAKE) -C u8g2-linux/ clean

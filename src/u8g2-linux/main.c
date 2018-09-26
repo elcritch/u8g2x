@@ -2,7 +2,7 @@
 #include <u8g2.h>
 #include "i2c.h"
 
-u8g2_t u8g2;
+u8g2_t display_u8g2;
 int i2c_device;
 char device[] = "/dev/i2c-1";
 
