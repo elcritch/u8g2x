@@ -51,8 +51,6 @@ uint8_t u8x8_byte_linux_hw_spi(u8x8_t *u8x8,
 
     case U8X8_MSG_BYTE_SEND:
       // Send SPI Data
-      /* fprintf(stderr, "spi_transfer: size: %u ptr: %p\n", arg_int, arg_ptr); */
-
       if (spi_transfer(&pins->devs.spi, (uint8_t *)arg_ptr, NULL, arg_int) < 0) {
         fprintf(stderr, "spi_transfer(): %s\n", spi_errmsg(&pins->devs.spi));
         return 0;
@@ -60,7 +58,6 @@ uint8_t u8x8_byte_linux_hw_spi(u8x8_t *u8x8,
       break;
 
     case U8X8_MSG_BYTE_END_TRANSFER:
-      fprintf(stderr, "spi_end_transfer: size: %u ptr: %p\n", arg_int, arg_ptr);
       u8x8->gpio_and_delay_cb(u8x8,
                               U8X8_MSG_DELAY_NANO,
                               u8x8->display_info->pre_chip_disable_wait_ns,
