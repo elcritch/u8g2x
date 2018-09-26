@@ -21,6 +21,8 @@ CFLAGS= $(IDIR)
 U8G2_SRCS=$(wildcard $(SRCDIR)/*.c)
 U8G2_OBJS=$(patsubst $(SRCDIR)/%,$(OBJDIR)/%,$(U8G2_SRCS:.c=.o))
 
+PERIPHERY_OBJS=$(wildcard c-periphery/obj/*.o)
+
 UL_SRCS= u8g2_linux_impl.c u8g2_linux_spi.c
 UL_OBJS=$(patsubst $(SRCDIR)/%,$(OBJDIR)/%,$(UL_SRCS:.c=.o))
 
@@ -36,9 +38,9 @@ endif
 
 all: directories $(OUTDIR)/libu8g2.a
 
-$(OUTDIR)/libu8g2.a: $(U8G2_OBJS) $(UL_OBJS) cperiphery subforthwith
+$(OUTDIR)/libu8g2.a: $(U8G2_OBJS) $(UL_OBJS) cperiphery
 	@echo Generating $@ ...
-	ar rcs $@ $(U8G2_OBJS) $(UL_OBJS)
+	ar rcs $@ $(U8G2_OBJS) $(UL_OBJS) $(PERIPHERY_OBJS)
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c
 	$(CC) -c -o $@ $< $(CFLAGS) $(LDIR) $(LIBS)
@@ -52,6 +54,7 @@ clean:
 	@rm -rf $(OBJDIR)
 	@echo RM -rf $(OUTDIR)/
 	@rm -rf $(OUTDIR)
+	$(MAKE) -C c-periphery/ clean
 
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c

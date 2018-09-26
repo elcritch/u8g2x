@@ -4,8 +4,8 @@
 #include <stdio.h>
 
 
-#define DISPLAY_CS 51
 #define DISPLAY_DC 48
+#define DISPLAY_CS 51
 #define DISPLAY_RESET 50
 #define SPI_DEVICE "spidev1.0"
 
@@ -20,6 +20,7 @@ int main(void)
   display_pins.dc = DISPLAY_DC;
   display_pins.reset = DISPLAY_RESET;
   display_pins.cs = DISPLAY_CS;
+  display_pins.device_name = "/dev/spidev1.0";
 
   u8g2_cb_t *rotation = U8G2_R0;
 

@@ -1,9 +1,5 @@
-*.swp
-obj/
 *.a
-*.sh
-tests/*
-!tests/*.c
-!tests/*.h
 *.o
-u8g2x-main
+bin/
+test-example
+

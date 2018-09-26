@@ -23,12 +23,13 @@ struct gpio_devs {
   gpio_t dc;
   gpio_t reset;
   gpio_t d0;
+
   spi_t spi;
   i2c_t i2c;
 };
 
 struct gpio_pins {
-  char device_name[128];
+  char *device_name;
   int32_t cs;
   int32_t dc;
   int32_t d0;

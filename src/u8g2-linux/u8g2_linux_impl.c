@@ -32,6 +32,7 @@ uint8_t u8x8_linux_gpio_and_delay(u8x8_t *u8x8,
                                   void *arg_ptr)
 {
   gpio_pins_t *pins = u8x8_GetUserPtr(u8x8);
+  char str_msg[256];
 
   switch(msg) {
 
@@ -53,36 +54,44 @@ uint8_t u8x8_linux_gpio_and_delay(u8x8_t *u8x8,
 
     case U8X8_MSG_GPIO_AND_DELAY_INIT:	// called once during init phase of u8g2/u8x8
 
-      /* Open GPIO CS with input direction */
+      /* Open GPIO CS with output direction */
       if (pins->cs >= 0 && gpio_open(&pins->devs.cs, pins->cs, GPIO_DIR_OUT) < 0) {
         fprintf(stderr, "error: gpio_open(): %s\n", gpio_errmsg(&pins->devs.cs));
         return 0;
       } else {
-        fprintf(stderr, "gpio_open(): %s\n", "CS");
+        char str_msg[256];
+        gpio_tostring(&pins->devs.cs, str_msg, 256);
+        fprintf(stderr, "gpio_open(%s): %s\n", "CS", str_msg);
       }
 
-      /* Open GPIO DC with input direction */
+      /* Open GPIO DC with output direction */
       if (pins->dc >= 0 && gpio_open(&pins->devs.dc, pins->dc, GPIO_DIR_OUT) < 0) {
         fprintf(stderr, "error: gpio_open(): %s\n", gpio_errmsg(&pins->devs.dc));
         return 0;
       } else {
-        fprintf(stderr, "gpio_open(): %s\n", "DC");
+        char str_msg[256];
+        gpio_tostring(&pins->devs.dc, str_msg, 256);
+        fprintf(stderr, "gpio_open(%s): %s\n", "DS", str_msg);
       }
 
-      /* Open GPIO RESET with input direction */
-      if (pins->reset >= 0 && gpio_open(&pins->devs.reset, pins->cs, GPIO_DIR_OUT) < 0) {
+      /* Open GPIO RESET with output direction */
+      if (pins->reset >= 0 && gpio_open(&pins->devs.reset, pins->reset, GPIO_DIR_OUT) < 0) {
         fprintf(stderr, "error: gpio_open(): %s\n", gpio_errmsg(&pins->devs.reset));
         return 0;
       } else {
-        fprintf(stderr, "gpio_open(): %s\n", "RESET");
+        char str_msg[256];
+        gpio_tostring(&pins->devs.reset, str_msg, 256);
+        fprintf(stderr, "gpio_open(%s): %s\n", "RESET", str_msg);
       }
 
-      /* Open GPIO D0 with input direction */
-      if (pins->d0 >= 0 && gpio_open(&pins->devs.d0, pins->cs, GPIO_DIR_OUT) < 0) {
+      /* Open GPIO D0 with output direction */
+      if (pins->d0 >= 0 && gpio_open(&pins->devs.d0, pins->d0, GPIO_DIR_OUT) < 0) {
         fprintf(stderr, "error: gpio_open(): %s\n", gpio_errmsg(&pins->devs.d0));
         return 0;
       } else {
-        fprintf(stderr, "gpio_open(): %s\n", "D0");
+        char str_msg[256];
+        gpio_tostring(&pins->devs.d0, str_msg, 256);
+        fprintf(stderr, "gpio_open(%s): %s\n", "D0", str_msg);
       }
 
       break;							// can be used to setup pins
