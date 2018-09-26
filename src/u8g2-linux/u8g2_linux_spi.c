@@ -9,8 +9,6 @@ uint8_t u8x8_byte_linux_hw_spi(u8x8_t *u8x8,
   gpio_pins_t *pins = u8x8_GetUserPtr(u8x8);
   uint8_t spi_mode = u8x8->display_info->spi_mode;
   uint32_t spi_clock_hz = u8x8->display_info->sck_clock_hz;
-  /* uint32_t spi_clock_hz = 4000000; */
-  uint8_t data[128];
 
   switch(msg) {
     case U8X8_MSG_BYTE_INIT:
