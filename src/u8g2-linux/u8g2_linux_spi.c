@@ -28,8 +28,8 @@ uint8_t u8x8_byte_linux_hw_spi(u8x8_t *u8x8,
       if (spi_set_bit_order(&pins->devs.spi, MSB_FIRST) < 0) {
         fprintf(stderr, "spi_set_bit_order(): %s\n",
                 spi_errmsg(&pins->devs.spi));
+        return 0;
       }
-
 
       break;
 
