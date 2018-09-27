@@ -17,6 +17,11 @@ extern user_cb_t *user_calls;
 u8g2_t display_u8g2;
 gpio_pins_t display_pins;
 
+void clear_buffer(char *buf, uint8_t sz) {
+  for (i = 0; i < sz; i++)
+      buf[i] = 0;
+}
+
 void InitDisplay() {
 	u8g2_InitDisplay(&display_u8g2);
 }
@@ -37,12 +42,11 @@ void DrawStr() {
   int16_t x = (int16_t)forth_pop();
   fcell_t strcnt = forth_pop();
 
-  int i;
   const int sz = 256;
   char msg[sz];
-  for (i = 0; i < sz; i++)
-    msg[i] = 0;
-  for (i = 0; i < strcnt; i++)
+  clear_buffer(msg, sz);
+
+  for (int i = 0; i < strcnt; i++)
     msg[i] = (uint8_t) forth_pop();
 
 	u8g2_DrawStr(&display_u8g2, x, y, msg);
@@ -59,10 +63,10 @@ void DrawGlyph() {
 }
 
 user_cb_t u8g2_bindings[] = {
-  InitDisplay,
   ClearBuffer,
   DrawGlyph,
   DrawStr,
+  InitDisplay,
   SendBuffer,
   SetFont,
   SetPowerSave,
