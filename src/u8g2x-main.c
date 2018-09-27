@@ -1,5 +1,6 @@
 
 #include "u8g2-linux/u8g2_linux_impl.h"
+#include "u8g2-fw-bindings.h"
 
 #include <stdio.h>
 

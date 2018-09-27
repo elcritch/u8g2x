@@ -6,7 +6,7 @@ CFLAGS = $(IDIR)
 
 all: sub-u8g2-linux-lib sub-forthwith u8g2x-main test-example
 
-u8g2x-main: u8g2x-main.c 
+u8g2x-main: u8g2x-main.c u8g2-fw-bindings.c
 	$(CC) -o $@ $^ $(CFLAGS) $(LDIR) $(LIBS)
 
 test-example: sub-u8g2-linux-lib 

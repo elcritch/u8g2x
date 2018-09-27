@@ -1,32 +1,20 @@
 
 
-#ifndef ___FORTHWITH_CORTEX_EXTRAS_H_
-#define ___FORTHWITH_CORTEX_EXTRAS_H_
+#ifndef ___FORTHWITH_U8G2_EXTRAS_H_
+#define ___FORTHWITH_U8G2_EXTRAS_H_
 
 
-/* #ifdef __cplusplus */
-extern "C" {
-/* #endif */
+void doDot();
+int forth_bootstrap_u8g2();
 
-  void domicros();
-  void domillis();
-  void dopinmode();
-  int forth_cortex_bootstrap();
-
-#include "forthwith-cortex.h"
+#include "forthwith/_build/forthwith-consts.h"
+#include "forthwith/_build/forthwith.h"
 
   // Define Primitives, including function bodies, etc
 #define FORTH_DEFINE_HEADERS
-#include "../forthwith/src/xmacros.h"
-#include "../impl/xmacros.cortex-extras.h"
+#include "forthwith/src/xmacros.h"
+#include "xmacros.u8g2.bindings.h"
 #undef FORTH_DEFINE_HEADERS
 
-
-
-/* #ifdef __cplusplus */
-}
-/* #endif */
-
-
-#endif // _FORTHWITH_CORTEX_EXTRAS_H_
+#endif // _FORTHWITH_U8G2_EXTRAS_H_
 
