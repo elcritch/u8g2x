@@ -1,30 +1,30 @@
 
 #include "u8g2-fw-bindings.h"
+#include <stdio.h>
+#include <string.h>
 
-  // Define Primitives, including function bodies, etc
-#define FORTH_DEFINE_PRIMITIVES
-#include "forthwith/src/xmacros.h"
-#include "xmacros.u8g2.bindings.h"
-#undef FORTH_DEFINE_PRIMITIVES
+void doDot() {
+  fcell_t n = forth_pop();
 
-  void doDot() {
-    fcell_t n = forth_pop();
+  char msg[128];
+  int len;
 
-    String s = String(n);
+  sprintf(msg, "%d", n);
+  len = strlen(msg);
 
-    write_str(s.length(), (char *)s.c_str());
-  }
+  write_str(len, msg);
+}
 
+void doDotDot() {
+  fcell_t n = forth_pop();
 
-__fw_noinline__
-int forth_bootstrap_u8g2() {
+  char msg[128];
+  int len;
 
-  #define FORTH_DEFINE_DICT_ENTRIES
-  #include "forthwith/src/xmacros.h"
-  #include "xmacros.u8g2-extras.h"
-  #undef FORTH_DEFINE_DICT_ENTRIES
+  sprintf(msg, "%X", n);
+  len = strlen((char*)msg);
 
-  return FW_OK;
+  write_str(len, msg);
 }
 
 

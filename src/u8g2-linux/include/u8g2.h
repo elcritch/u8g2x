@@ -208,20 +208,20 @@ struct _u8g2_font_info_t
   uint8_t bbx_mode;
   uint8_t bits_per_0;
   uint8_t bits_per_1;
-  
+
   /* offset 4 */
   uint8_t bits_per_char_width;
-  uint8_t bits_per_char_height;		
+  uint8_t bits_per_char_height;
   uint8_t bits_per_char_x;
   uint8_t bits_per_char_y;
   uint8_t bits_per_delta_x;
-  
+
   /* offset 9 */
   int8_t max_char_width;
   int8_t max_char_height; /* overall height, NOT ascent. Instead ascent = max_char_height + y_offset */
   int8_t x_offset;
   int8_t y_offset;
-  
+
   /* offset 13 */
   int8_t  ascent_A;
   int8_t  descent_g;	/* usually a negative value */
